@@ -1,0 +1,36 @@
+@use "sass:color";
+// Each color filled here will create a css variable exposed globally
+$colors: ("w-100": rgba(243, 242, 238, 1),
+  "w-80": rgba(243, 242, 238, 0.8),
+  "w-60": rgba(243, 242, 238, 0.6),
+  "w-40": rgba(243, 242, 238, 0.4),
+  "b-100": rgba(25, 25, 25, 1),
+  "b-30": rgba(25, 25, 25, 0.3),
+  "primary-maroon": rgba(110, 46, 46, 1),
+  "primary-mustard": rgba(197, 153, 72, 1),
+  "primary-green": rgba(41, 56, 38, 1),
+  "primary-blue": rgba(58, 79, 135, 1),
+  "primary-brown": rgba(132, 63, 10, 1),
+  "primary-orange": rgba(192, 85, 15, 1),
+  "overlay-maroon": rgba(110, 46, 46, 0.44),
+  "overlay-mustard": rgba(197, 153, 72, 0.44),
+);
+
+:root {
+
+  @each $name,
+  $color in $colors {
+    --#{$name}: #{$color};
+  }
+}
+
+@each $name,
+$color in $colors {
+  .text-#{$name} {
+    color: var(--#{$name});
+  }
+
+  .bg-#{$name} {
+    background-color: var(--#{$name});
+  }
+}

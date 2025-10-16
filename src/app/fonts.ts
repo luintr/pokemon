@@ -1,16 +1,17 @@
-import localFont from 'next/font/local';
+import { Poppins, Inter, Noto_Sans_JP } from 'next/font/google';
 
-const FR = localFont({
-  src: [
-    {
-      path: './fonts/fire_red.otf',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
+export const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
-  variable: '--font-FR',
-  preload: true,
 });
 
-export const fonts = { className: `${FR.variable}` };
+export const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+export const notoSansJP = Noto_Sans_JP({
+  subsets: ['latin'],
+  display: 'swap',
+});

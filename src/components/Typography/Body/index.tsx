@@ -20,7 +20,7 @@ const TypoBody = forwardRef(
     const {
       tag: Component = 'p',
       color = 'text-b-100',
-      size = 18,
+      size = 30,
       className,
       children,
       ...restProps

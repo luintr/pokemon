@@ -19,6 +19,10 @@
         "name": "next"
       }
     ],
+    "typeRoots": [
+      "./src/schema",
+      "./node_modules/@types"
+    ],
     "paths": {
       // "@/*": ["./src/*"],
       "@Components/*": ["./src/components/*"],

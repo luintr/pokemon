@@ -17,15 +17,17 @@
     "@next/font": "^14.0.1",
     "@preact/signals-react": "^2.0.1",
     "@studio-freight/react-lenis": "^0.0.36",
+    "axios": "^1.12.2",
     "classnames": "^2.3.2",
     "gsap": "^3.13.0",
+    "imagetracerjs": "^1.2.6",
     "lenis": "^1.1.14",
     "linkify-it": "^4.0.1",
     "lodash-es": "^4.17.21",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-inlinesvg": "^4.1.4",
+    "react-inlinesvg": "^4.2.0",
     "tempus": "^1.0.0-dev.11"
   },
   "devDependencies": {

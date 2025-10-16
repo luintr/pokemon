@@ -3,7 +3,7 @@ import './main.scss';
 import GridDebugger from '@Layout/GridDebugger';
 import type { Metadata } from 'next';
 
-import { fonts } from './fonts';
+import { inter } from './fonts';
 import GSAP from '@Layout/Gsap';
 import Layout from '@Layout/index';
 
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }): JSX.Element {
   return (
-    <html lang="en" className={fonts.className}>
+    <html lang="en" className={inter.className}>
       <body>
         <Layout>{children}</Layout>
         <GridDebugger />

@@ -2,17 +2,15 @@
   font-weight: 400;
   line-height: 120%;
 
-  &_18 {
-    font-size: rem(18px);
-    letter-spacing: -0.03em;
+  &_30 {
+    font-size: rem(30px);
 
     @include tablet {
-      font-size: rem(16px);
+      font-size: rem(26px);
     }
   }
 
-  &_16 {
-    font-size: rem(16px);
-    letter-spacing: -0.02em;
+  &_26 {
+    font-size: rem(26px);
   }
 }

@@ -1,7 +1,7 @@
 .home {
   section {
     background-color: var(--primary-maroon);
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     grid-column: 1/-1;
     display: flex;
@@ -12,6 +12,56 @@
 
     &:nth-child(2) {
       background-color: var(--primary-mustard);
+    }
+  }
+
+  .section1 {
+    flex-direction: row;
+    gap: 20px;
+    padding: 40px;
+    font-size: 16px;
+
+    h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+      border: 2px solid var(--w-100);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--w-100);
+      cursor: pointer;
+
+      &::file-selector-button {
+        padding: 8px 16px;
+        background: var(--w-100);
+        color: var(--primary-maroon);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .svgResult {
+    max-width: 800px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    
+    h3 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    svg {
+      max-width: 100%;
+      height: auto;
+      background: white;
+      border-radius: 4px;
     }
   }
 

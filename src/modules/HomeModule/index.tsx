@@ -1,13 +1,11 @@
 'use client';
 
 import TypoBody from '@Components/Typography/Body';
-import React from 'react';
-import { useRemoveBackground } from '@Hooks/useRemoveBackground';
 import { useDominantColor } from '@Hooks/useDominantColor';
+import React from 'react';
 
-import s from './style.module.scss';
 import { usePokeContext } from '@Api/store';
-import Image from 'next/image';
+import s from './style.module.scss';
 
 const HomeModule = (): JSX.Element => {
   const { state, nextPokemon, prevPokemon, setState } = usePokeContext();
@@ -50,6 +48,7 @@ const HomeModule = (): JSX.Element => {
         className={s.section1}
         style={{
           backgroundColor: dominantColor || 'var(--primary-maroon)',
+          transition: 'background-color 0.3s var(--primary-ease)',
         }}
       >
         {/* Navigation buttons */}

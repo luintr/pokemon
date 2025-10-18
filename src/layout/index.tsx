@@ -9,7 +9,7 @@ const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   useResetPage();
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main>
         <LenisWrapper>{children}</LenisWrapper>
       </main>

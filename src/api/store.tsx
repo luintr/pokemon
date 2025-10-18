@@ -1,18 +1,17 @@
 "use client";
-import {
-    createContext,
-    Dispatch,
-    SetStateAction,
-    useContext,
-    useMemo,
-    useState,
-    useEffect,
-    useCallback,
-    useRef,
-} from "react";
+import { detectIdFromUrl, GENERATION_REGION_MAP, getEvolutionData } from "@Utils/utils";
 import _ from "lodash";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 import { api, endpoints } from "./base";
-import { GENERATION_REGION_MAP, detectIdFromUrl, getEvolutionData } from "@Utils/utils";
 
 type StoreType = {
     total: number;
@@ -60,7 +59,6 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }): JSX.E
     const getGenerationList = useCallback(async () => {
         try {
             const response = await api.get(`${endpoints.generation.list}`);
-            console.log(response.data);
             setState((prevState) => ({
                 ...prevState,
                 generations: response.data.results.map((generation: any) => {
@@ -76,17 +74,20 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }): JSX.E
         async (id: number) => {
             try {
                 const pokeResponse = await api.get(`${endpoints.pokemon.detail(id)}`);
-                console.log("pokeResponse", pokeResponse.data);
-
+                // console.log("pokeResponse", pokeResponse.data);
                 const speciesResponse = await api.get(`${endpoints.pokemonSpecies.detail(id)}`);
-                console.log("speciesResponse", speciesResponse.data);
-
+                // console.log("speciesResponse", speciesResponse.data);
                 const evolutionChainResponse = await api.get(
                     `${endpoints.evolutionChain.detail(detectIdFromUrl(speciesResponse.data.evolution_chain.url))}`
                 );
 
                 // Get evolution data
                 const evolutionData = await getEvolutionData(evolutionChainResponse.data.chain);
+
+                if (!pokeResponse.data.is_default) {
+                    console.warn(`Pokemon ID ${id} is not default form, skipping...`);
+                    return;
+                }
 
                 setState((prevState) => ({
                     ...prevState,

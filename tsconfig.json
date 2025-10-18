@@ -39,6 +39,7 @@
       "@Icons/*": ["./src/icons/*"],
       "@Types/*": ["./src/types/*"],
       "@Store/*": ["./src/store/*"],
+      "@Api/*": ["./src/api/*"],
       "@Interactive/*": ["./src/interactive/*"],
       "@Mocks/*": ["./src/mocks/*"]
     }

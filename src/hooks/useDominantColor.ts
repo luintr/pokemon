@@ -47,7 +47,6 @@ export function useDominantColor(imageUrl?: string): string | null {
         if (dominant) {
           const [r, g, b] = dominant[0].split(",").map(Number);
           const hex = rgbToHex(r, g, b);
-          console.log('Dominant color:', hex, 'RGB:', r, g, b);
           setColor(hex);
         }
       } catch (err) {

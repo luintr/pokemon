@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { inter } from './fonts';
 import GSAP from '@Layout/Gsap';
 import Layout from '@Layout/index';
+import { PokeProvider } from '@Api/store';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
   return (
     <html lang="en" className={inter.className}>
       <body>
-        <Layout>{children}</Layout>
+        <PokeProvider>
+          <Layout>{children}</Layout>
+        </PokeProvider>
         <GridDebugger />
         <GSAP />
       </body>

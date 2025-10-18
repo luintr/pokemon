@@ -8,6 +8,7 @@ import {
     useState,
     useEffect,
     useCallback,
+    useRef,
 } from "react";
 import _ from "lodash";
 import { api, endpoints } from "./base";
@@ -16,13 +17,15 @@ import { GENERATION_REGION_MAP, detectIdFromUrl, getEvolutionData } from "@Utils
 type StoreType = {
     total: number;
     selectedId: number;
-    generations: number[];
+    generations: GenerationType[];
     pokeData: PokemonDetailType | null;
 };
 
 type ContextType = {
     state: StoreType;
     setState: (state: StoreType) => void;
+    nextPokemon: () => void;
+    prevPokemon: () => void;
 };
 
 const initialState: StoreType = {
@@ -42,7 +45,7 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }): JSX.E
 
     const getTotalCount = useCallback(async () => {
         try {
-            const response = await api.get(`${endpoints.pokemon.list}?limit=10`);
+            const response = await api.get(`${endpoints.pokemonSpecies.list}`);
             const totalCount = response.data.count;
 
             setState((prevState) => ({
@@ -51,11 +54,25 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }): JSX.E
             }));
         } catch (error) {
             console.error("Error fetching Pokemon count:", error);
-            return 0;
         }
     }, []);
 
-    const getPokmonData = useCallback(
+    const getGenerationList = useCallback(async () => {
+        try {
+            const response = await api.get(`${endpoints.generation.list}`);
+            console.log(response.data);
+            setState((prevState) => ({
+                ...prevState,
+                generations: response.data.results.map((generation: any) => {
+                    return { name: generation.name, id: detectIdFromUrl(generation.url) };
+                }),
+            }));
+        } catch (error) {
+            console.error("Error fetching generation list:", error);
+        }
+    }, []);
+
+    const getPokemonData = useCallback(
         async (id: number) => {
             try {
                 const pokeResponse = await api.get(`${endpoints.pokemon.detail(id)}`);
@@ -64,11 +81,9 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }): JSX.E
                 const speciesResponse = await api.get(`${endpoints.pokemonSpecies.detail(id)}`);
                 console.log("speciesResponse", speciesResponse.data);
 
-                const evolutionChainId = detectIdFromUrl(speciesResponse.data.evolution_chain.url);
                 const evolutionChainResponse = await api.get(
-                    `${endpoints.evolutionChain.detail(evolutionChainId)}`
+                    `${endpoints.evolutionChain.detail(detectIdFromUrl(speciesResponse.data.evolution_chain.url))}`
                 );
-                console.log("evolutionChainResponse", evolutionChainResponse.data.chain);
 
                 // Get evolution data
                 const evolutionData = await getEvolutionData(evolutionChainResponse.data.chain);
@@ -126,22 +141,44 @@ export const PokeProvider = ({ children }: { children: React.ReactNode }): JSX.E
         [setState]
     );
 
+    const nextPokemon = useCallback(() => {
+        const nextId = state.selectedId < state.total ? state.selectedId + 1 : 1;
+        setState((prevState) => ({
+            ...prevState,
+            selectedId: nextId,
+        }));
+    }, [state.selectedId, state.total]);
+
+    const prevPokemon = useCallback(() => {
+        const prevId = state.selectedId > 1 ? state.selectedId - 1 : state.total;
+        setState((prevState) => ({
+            ...prevState,
+            selectedId: prevId,
+        }));
+    }, [state.selectedId, state.total]);
+
     const initialData = useCallback(async () => {
         await getTotalCount();
-        await getPokmonData(state.selectedId);
-    }, [getTotalCount, getPokmonData]);
+        await getGenerationList();
+    }, [getTotalCount, getGenerationList]);
 
     // Fetch total count when component mounts
     useEffect(() => {
         initialData();
     }, []);
 
+    useEffect(() => {
+        getPokemonData(state.selectedId);
+    }, [state.selectedId]);
+
     const value = useMemo<ContextType>(
         () => ({
             state,
             setState,
+            nextPokemon,
+            prevPokemon,
         }),
-        [state]
+        [state, nextPokemon, prevPokemon]
     );
     return <PokeContext.Provider value={value}> {children} </PokeContext.Provider>;
 };

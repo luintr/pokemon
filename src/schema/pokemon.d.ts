@@ -41,3 +41,8 @@ type PokemonEvolutionType = {
   name: string;
   image: string;
 }
+
+type GenerationType = {
+  id: number;
+  name: string;
+}
